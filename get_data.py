@@ -26,5 +26,17 @@ def get_data():
         data = pd.concat(X, axis=0)
     data.index = range(len(day_list) * 4802) # 将data的行索引值改成len(day_list)*4802
     print(data.head())
+    
     data.to_csv('/home/wanglin/Documents/get_data/label/data_201601.csv')
-    return data
+    # return data
+    with open('/home/wanglin/Documents/get_data/label/data_201601.csv') as reader, open('/home/wanglin/Documents/get_data/label/data_201601_new.csv', 'w') as writer:
+        for index, line in enumerate(reader):
+            if (index - 1) % 60 == 0:
+                writer.write(line)
+
+    new_data = pd.read_csv('/home/wanglin/Documents/get_data/label/data_201601_new.csv', header=None)
+    new_data.columns = ['index', 'high', 'low', 'last', 'ask1', 'bid1', 'ask_vol1', 'bid_vol1', 'amount', 'avebid', 'aveoff', 'trade', 'totbid', 'totoff', 'vol']
+    new_data.drop('index', axis=1, inplace=True)
+    new_data.to_csv('/home/wanglin/Documents/get_data/label/data_201601_new2.csv')
+
+get_data()
