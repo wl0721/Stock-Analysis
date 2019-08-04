@@ -25,7 +25,7 @@ day_list = get_deal_day_list_in_period(start_day, end_day)
 # code_list = label.index.values  # 得到所有code的列表
 code_list = ['000001', '000002', '000004', '000005', '000006', '000007', '000008', '000009', '000010', '000011']  # 选取10支股票
 
-# 得到给定日期内所有股票的14个tag数据
+# 得到给定日期内所有10支股票的14个tag数据
 def get_data():
     X = pd.DataFrame()
     for day in day_list:
@@ -37,6 +37,7 @@ def get_data():
                     df = gmt(int(day), tag, dtype='int64', codes=[code])
                 else:
                     df = gmt(int(day), tag, dtype='float32', codes=[code])
+				# df.index = range(4802)  # 将每个df的行索引值都改成range(4802)
 
                 Z = pd.concat([df, Z], axis=1)  # 将所有的tag进行横向上的拼接
             Z['code'] = code  # 在Z中添加一列，存放所有的股票代码
@@ -47,7 +48,9 @@ def get_data():
         X.insert(0, 'code', df_)  # 选择位置，再重新在X中插入code列
     # X.index = range(len(X))
     # print(X.head())
-    X.to_csv('/home/wanglin/Documents/get_data/label/data_wl/data.csv')
+    X.to_csv('/home/wanglin/Documents/get_data/label/data_wl/data.csv')  # data.csv文件中保存的是所有10支股票在给定日期内的所有tick数据
+
+#  对data.csv文件中的tick数据进行采样，每隔三分钟采样一次
 
 path1 = '/home/wanglin/Documents/get_data/label/data_wl'
 # 得到给定日期内所有股票（3267）每天的收益率
