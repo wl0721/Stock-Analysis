@@ -56,8 +56,9 @@ def get_data():
 		  	if (index - 1) % 60 == 0:
 				writer.write(line)
 	new_data = pd.read_csv('/home/wanglin/Documents/get_data/label/data_new.csv', header=None)
-	new_data.columns = ['index', 'high', 'low', 'last', 'ask1', 'bid1', 'ask_vol1', 'bid_vol1', 'amount', 'trade', 'avebid', 'aveoff', 'totbid', 'totoff', 'vol']
+	new_data.columns = ['index', 'code', 'high', 'low', 'last', 'ask1', 'bid1', 'ask_vol1', 'bid_vol1', 'amount', 'trade', 'avebid', 'aveoff', 'totbid', 'totoff', 'vol']
     new_data.drop('index', axis=1, inplace=True)
+	new_data.drop('code', axis=1, inplace=True)
     new_data.to_csv('/home/wanglin/Documents/get_data/label/data_new_2.csv')
 
 # 对得到的股票数据进行小波去噪
